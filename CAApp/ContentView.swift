@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 // MARK: - App Structure
 
-struct AppState: Equatable {
+struct AppState: Equatable, Identifiable {
    var frameworks: [Framework] = MockData.frameworks
    var selectedFramework: Framework?
 }
@@ -32,6 +32,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
       switch action {
       case .framework(index: let index, frameworkAction: FrameworkAction.didTapFramework):
          state.selectedFramework = state.frameworks[index]
+         print("that action fired off")
          return .none
          
       case .framework(index: let index, frameworkAction: let frameworkAction):
@@ -103,8 +104,11 @@ struct ContentView: View {
                })
             }
          }
-         
-//         .sheet(item: viewStore., content: <#T##(Identifiable) -> View#>)
+         .sheet(item: viewStore.binding(
+            get: viewStore.selectedFramework,
+            send: )
+            ),
+         content:FrameworkDetailView.init(framework: viewStore.selectedFramework))
       }
    }
 }
@@ -139,6 +143,9 @@ struct SmallView: View {
                     .minimumScaleFactor(0.6)    /// But only down to 60%
             }
             .padding()
+            .onTapGesture {
+               framework.send(.didTapFramework)
+            }
          }
       }
    }

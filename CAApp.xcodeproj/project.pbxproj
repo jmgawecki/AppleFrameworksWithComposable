@@ -16,6 +16,8 @@
 		EFA3F5D62656568D005BEA3D /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = EFA3F5D52656568D005BEA3D /* ComposableArchitecture */; };
 		EFA3F5D926565957005BEA3D /* FrameworkMockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA3F5D826565957005BEA3D /* FrameworkMockData.swift */; };
 		EFA3F5DC26566485005BEA3D /* FrameworkTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA3F5DB26566485005BEA3D /* FrameworkTitleView.swift */; };
+		EFA3F5DE265694AF005BEA3D /* FrameworkDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA3F5DD265694AF005BEA3D /* FrameworkDetailView.swift */; };
+		EFA3F5E0265694CB005BEA3D /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA3F5DF265694CB005BEA3D /* SafariView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		EFA3F5C82656561F005BEA3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFA3F5D826565957005BEA3D /* FrameworkMockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkMockData.swift; sourceTree = "<group>"; };
 		EFA3F5DB26566485005BEA3D /* FrameworkTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkTitleView.swift; sourceTree = "<group>"; };
+		EFA3F5DD265694AF005BEA3D /* FrameworkDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameworkDetailView.swift; sourceTree = "<group>"; };
+		EFA3F5DF265694CB005BEA3D /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				EFA3F5DB26566485005BEA3D /* FrameworkTitleView.swift */,
+				EFA3F5DD265694AF005BEA3D /* FrameworkDetailView.swift */,
+				EFA3F5DF265694CB005BEA3D /* SafariView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -290,8 +296,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFA3F5AC2656561D005BEA3D /* ContentView.swift in Sources */,
+				EFA3F5DE265694AF005BEA3D /* FrameworkDetailView.swift in Sources */,
 				EFA3F5AA2656561D005BEA3D /* CAAppApp.swift in Sources */,
 				EFA3F5DC26566485005BEA3D /* FrameworkTitleView.swift in Sources */,
+				EFA3F5E0265694CB005BEA3D /* SafariView.swift in Sources */,
 				EFA3F5D926565957005BEA3D /* FrameworkMockData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
