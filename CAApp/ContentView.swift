@@ -30,6 +30,10 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
    ),
    Reducer { state, action, environment in
       switch action {
+      case .framework(index: let index, frameworkAction: FrameworkAction.didTapFramework):
+         state.selectedFramework = state.frameworks[index]
+         return .none
+         
       case .framework(index: let index, frameworkAction: let frameworkAction):
          return .none
       }
@@ -84,9 +88,9 @@ let frameworkReducer = Reducer<Framework, FrameworkAction, FrameworkEnvironment>
 struct ContentView: View {
    let store: Store<AppState, AppAction>
    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    var body: some View {
-      ScrollView {
-         WithViewStore(self.store) { viewStore in
+   var body: some View {
+      WithViewStore(self.store) { viewStore in
+         ScrollView {
             HStack {
                LazyVGrid(columns: columns, content: {
                   ForEachStore(
@@ -95,12 +99,14 @@ struct ContentView: View {
                         action: AppAction.framework(index:frameworkAction:)
                      ),
                      content: SmallView.init(store:)
-                     )
+                  )
                })
             }
          }
+         
+//         .sheet(item: viewStore., content: <#T##(Identifiable) -> View#>)
       }
-    }
+   }
 }
 
 struct ContentView_Previews: PreviewProvider {
