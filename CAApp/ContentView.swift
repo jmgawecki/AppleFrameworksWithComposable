@@ -10,13 +10,14 @@ import ComposableArchitecture
 
 // MARK: - App Structure
 
-struct AppState: Equatable, Identifiable {
+struct AppState: Equatable {
    var frameworks: [Framework] = MockData.frameworks
    var selectedFramework: Framework?
 }
 
 enum AppAction: Equatable {
    case framework(index: Int, frameworkAction: FrameworkAction)
+   case selectedFramework(Framework?)
 }
 
 struct AppEnvironment { }
@@ -32,10 +33,12 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
       switch action {
       case .framework(index: let index, frameworkAction: FrameworkAction.didTapFramework):
          state.selectedFramework = state.frameworks[index]
-         print("that action fired off")
          return .none
          
       case .framework(index: let index, frameworkAction: let frameworkAction):
+         return .none
+         
+      case .selectedFramework(let framework):
          return .none
       }
    }
@@ -70,7 +73,6 @@ struct FrameworkEnvironment {}
 let frameworkReducer = Reducer<Framework, FrameworkAction, FrameworkEnvironment> { framework, action, environment in
    switch action {
    case .didTapFramework:
-      framework.isSelected.toggle()
       return .none
    case .didCloseFramework:
       framework.isSelected.toggle()
@@ -105,10 +107,9 @@ struct ContentView: View {
             }
          }
          .sheet(item: viewStore.binding(
-            get: viewStore.selectedFramework,
-            send: )
-            ),
-         content:FrameworkDetailView.init(framework: viewStore.selectedFramework))
+            get: \.selectedFramework,
+            send: AppAction.selectedFramework(viewStore.selectedFramework)
+         ), content: { FrameworkDetailView(framework: $0)})
       }
    }
 }
