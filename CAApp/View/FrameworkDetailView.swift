@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct FrameworkDetailView: View {
 //    @Binding var isShowingDetailView: Bool
 //    @State private var isShowingSafariView = false
+   let store: Store<Framework, FrameworkAction>
     
     var framework: Framework
     
@@ -31,18 +33,21 @@ struct FrameworkDetailView: View {
             
 //            LearnMoreButtonView(isShowingSafariView: $isShowingSafariView)
         }
+        .onDisappear(perform: {
+         //
+        })
 //        .fullScreenCover(isPresented: $isShowingSafariView, content: {
 //            SafariView(url: URL(string: framework.urlString) ?? URL(string: "www.apple.co.uk")!)
 //        })
     }
 }
-
-struct FrameworkElementView_Previews: PreviewProvider {
-    static var previews: some View {
-        FrameworkDetailView(framework: MockData.sampleFramework)
-            .preferredColorScheme(.dark)
-    }
-}
+//
+//struct FrameworkElementView_Previews: PreviewProvider {
+//    static var previews: some View {
+//      FrameworkDetailView(store: <#Store<Framework, FrameworkAction>#>, framework: MockData.sampleFramework)
+//            .preferredColorScheme(.dark)
+//    }
+//}
 
 //MARK:- Views
 

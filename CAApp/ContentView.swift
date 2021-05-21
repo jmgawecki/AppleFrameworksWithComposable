@@ -39,6 +39,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
          return .none
          
       case .selectedFramework(let framework):
+         state.selectedFramework = framework
          return .none
       }
    }
@@ -105,11 +106,11 @@ struct ContentView: View {
                   )
                })
             }
+            .sheet(item: viewStore.binding(
+               get: \.selectedFramework,
+               send: AppAction.selectedFramework(viewStore.selectedFramework)
+            ), content: { FrameworkDetailView(store: <#Store<Framework, FrameworkAction>#>, framework: $0) })
          }
-         .sheet(item: viewStore.binding(
-            get: \.selectedFramework,
-            send: AppAction.selectedFramework(viewStore.selectedFramework)
-         ), content: { FrameworkDetailView(framework: $0)})
       }
    }
 }
