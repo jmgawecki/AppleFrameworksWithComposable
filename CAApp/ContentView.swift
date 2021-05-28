@@ -8,90 +8,12 @@
 import SwiftUI
 import ComposableArchitecture
 
-// MARK: - App Structure
-
-struct AppState: Equatable {
-   var frameworks: [Framework] = MockData.frameworks
-   var selectedFramework: Framework?
-}
-
-enum AppAction: Equatable {
-   case framework(index: Int, frameworkAction: FrameworkAction)
-   case selectedFramework(Framework?)
-   case dismissFrameworkDetailView
-   case frameworkDetailView(FrameworkAction)
-}
-
-struct AppEnvironment { }
-
-
-let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
-   frameworkReducer.forEach(
-      state:            \AppState.frameworks,
-      action:           /AppAction.framework(index:frameworkAction:),
-      environment:      { _ in FrameworkEnvironment() }
-   ),
-   
-   Reducer { state, action, environment in
-      switch action {
-      case .framework(index: let index, frameworkAction: FrameworkAction.didTapFramework):
-         state.selectedFramework = state.frameworks[index]
-         return .none
-         
-      case .framework(index: let index, frameworkAction: let frameworkAction):
-         return .none
-         
-      case .selectedFramework(let framework):
-         state.selectedFramework = framework
-         return .none
-         
-      case .dismissFrameworkDetailView:
-         state.selectedFramework = nil
-         return .none
-         
-      case .frameworkDetailView:
-         return .none
-      }
-   }
-)
-.debug()
 
 
 
 
 
-// MARK: - Framework Structure
 
-struct Framework: Identifiable, Equatable {
-   let id            = UUID()
-   var isSelected    = false
-   let name:         String
-   let imageName:    String
-   let urlString:    String
-   let description:  String
-}
-
-
-enum FrameworkAction {
-   case didTapFramework
-   case didCloseFramework
-   case didGoSafari
-}
-
-
-struct FrameworkEnvironment {}
-
-
-let frameworkReducer = Reducer<Framework, FrameworkAction, FrameworkEnvironment> { framework, action, environment in
-   switch action {
-   case .didTapFramework:
-      return .none
-   case .didCloseFramework:
-      return .none
-   case .didGoSafari:
-      return .none
-   }
-}
 
 
 // MARK: - View
