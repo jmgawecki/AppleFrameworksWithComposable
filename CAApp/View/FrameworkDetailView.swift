@@ -9,8 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct FrameworkDetailView: View {
-//    @Binding var isShowingDetailView: Bool
-//    @State private var isShowingSafariView = false
    let store: Store<Framework, FrameworkAction>
     
     
@@ -43,9 +41,9 @@ struct FrameworkElementView_Previews: PreviewProvider {
    static var previews: some View {
       FrameworkDetailView(
          store: Store<Framework, FrameworkAction>(
-            initialState: MockData.sampleFramework,
-            reducer: frameworkReducer,
-            environment: FrameworkEnvironment()
+            initialState:  MockData.sampleFramework,
+            reducer:       frameworkReducer,
+            environment:   FrameworkEnvironment()
          ))
          .preferredColorScheme(.dark)
    }

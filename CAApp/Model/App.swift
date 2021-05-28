@@ -17,12 +17,12 @@ struct AppState: Equatable {
 
 enum AppAction: Equatable {
    case framework(index: Int, frameworkAction: FrameworkAction)
-   case selectedFramework(Framework?)
-   case dismissFrameworkDetailView
    case frameworkDetailView(FrameworkAction)
 }
 
-struct AppEnvironment { }
+struct AppEnvironment {
+   var uuid: () -> UUID
+}
 
 
 let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
@@ -34,23 +34,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
    
    Reducer { state, action, environment in
       switch action {
+      
+      // MARK: - Framework Actions
       case .framework(index: let index, frameworkAction: FrameworkAction.didTapFramework):
          state.selectedFramework = state.frameworks[index]
          return .none
+      
          
       case .framework(index: let index, frameworkAction: let frameworkAction):
          return .none
          
-      case .selectedFramework(let framework):
-         state.selectedFramework = framework
-         return .none
-         
-      case .dismissFrameworkDetailView:
-         state.selectedFramework = nil
-         return .none
-         
+      // MARK: - FrameworkDetailView Actions
       case .frameworkDetailView(.didGoSafari):
-         /// This action will happen instead of the FrameworkAction
          state.selectedFramework?.isShowingSafari = true
          return .none
          
@@ -59,7 +54,8 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
          return .none
          
       case .frameworkDetailView(.didCloseFramework):
-         return Effect(value: .dismissFrameworkDetailView)
+         state.selectedFramework = nil
+         return .none
          
       case .frameworkDetailView:
          return .none

@@ -7,27 +7,146 @@
 
 import XCTest
 @testable import CAApp
+import ComposableArchitecture
 
 class CAAppTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
+   func testSelectingFramework() {
+      // Arrange
+      let store = TestStore(
+         initialState: AppState(
+            frameworks: [
+               Framework(
+                  id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+                  isShowingSafari: false,
+                  name: "test",
+                  imageName: "test",
+                  urlString: "test",
+                  description: "test")
+            ],
+            selectedFramework: nil),
+         reducer: appReducer,
+         environment: AppEnvironment(uuid: { UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")! }))
+      
+      // Act and Assert
+      store.assert(
+         .send(.framework(index: 0, frameworkAction: .didTapFramework)) {
+            $0.selectedFramework = Framework(
+               id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+               isShowingSafari: false,
+               name: "test",
+               imageName: "test",
+               urlString: "test",
+               description: "test")
+         }
+      )
+   }
+   
+   
+   func testDeselectingFramework() {
+      // Arrange
+      let store = TestStore(
+         initialState: AppState(
+            frameworks: [
+               Framework(
+                  id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+                  isShowingSafari: false,
+                  name: "test",
+                  imageName: "test",
+                  urlString: "test",
+                  description: "test")
+            ],
+            selectedFramework:
+               Framework(
+                  id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+                  isShowingSafari: false,
+                  name: "test",
+                  imageName: "test",
+                  urlString: "test",
+                  description: "test")
+         ),
+         reducer: appReducer,
+         environment: AppEnvironment(uuid: { UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")! }))
+      
+      // Act and Assert
+      store.assert(
+         .send(.framework(index: 0, frameworkAction: .didCloseFramework)) {
+            $0.selectedFramework = nil
+         }
+      )
+   }
+   
+   func testDidTapSafariButton() {
+      // Arrange
+      let store = TestStore(
+         initialState: AppState(
+            frameworks: [
+               Framework(
+                  id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+                  isShowingSafari: false,
+                  name: "test",
+                  imageName: "test",
+                  urlString: "test",
+                  description: "test")
+            ],
+            selectedFramework: Framework(
+               id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+               isShowingSafari: false,
+               name: "test",
+               imageName: "test",
+               urlString: "test",
+               description: "test")),
+         reducer: appReducer,
+         environment: AppEnvironment(uuid: { UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")! }))
+      
+      // Act and Assert
+      store.assert(
+         .send(.frameworkDetailView(.didGoSafari)) {
+            $0.selectedFramework = Framework(
+               id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+               isShowingSafari: true,
+               name: "test",
+               imageName: "test",
+               urlString: "test",
+               description: "test")
+         }
+      )
+   }
+   
+   func testDidCloseSafari() {
+      // Arrange
+      let store = TestStore(
+         initialState: AppState(
+            frameworks: [
+               Framework(
+                  id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+                  isShowingSafari: false,
+                  name: "test",
+                  imageName: "test",
+                  urlString: "test",
+                  description: "test")
+            ],
+            selectedFramework: Framework(
+               id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+               isShowingSafari: true,
+               name: "test",
+               imageName: "test",
+               urlString: "test",
+               description: "test")),
+         reducer: appReducer,
+         environment: AppEnvironment(uuid: { UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")! }))
+      
+      // Act and Assert
+      store.assert(
+         .send(.frameworkDetailView(.didCloseSafari)) {
+            $0.selectedFramework = Framework(
+               id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+               isShowingSafari: false,
+               name: "test",
+               imageName: "test",
+               urlString: "test",
+               description: "test")
+         }
+      )
+   }
 }

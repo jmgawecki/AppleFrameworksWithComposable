@@ -12,13 +12,13 @@ import ComposableArchitecture
 struct CAAppApp: App {
     var body: some Scene {
         WindowGroup {
-         ContentView(store:
+         MainView(store:
                         Store(
                            initialState: AppState(
                               frameworks: MockData.frameworks,
                               selectedFramework: nil),
                            reducer: appReducer,
-                           environment: AppEnvironment()
+                           environment: AppEnvironment(uuid: UUID.init)
                         )
          )
         }

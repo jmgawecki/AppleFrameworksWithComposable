@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EFA3F5AA2656561D005BEA3D /* CAAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA3F5A92656561D005BEA3D /* CAAppApp.swift */; };
-		EFA3F5AC2656561D005BEA3D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA3F5AB2656561D005BEA3D /* ContentView.swift */; };
+		EFA3F5AC2656561D005BEA3D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA3F5AB2656561D005BEA3D /* MainView.swift */; };
 		EFA3F5AE2656561F005BEA3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFA3F5AD2656561F005BEA3D /* Assets.xcassets */; };
 		EFA3F5B12656561F005BEA3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFA3F5B02656561F005BEA3D /* Preview Assets.xcassets */; };
 		EFA3F5BC2656561F005BEA3D /* CAAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA3F5BB2656561F005BEA3D /* CAAppTests.swift */; };
@@ -42,7 +42,7 @@
 /* Begin PBXFileReference section */
 		EFA3F5A62656561D005BEA3D /* CAApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFA3F5A92656561D005BEA3D /* CAAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAAppApp.swift; sourceTree = "<group>"; };
-		EFA3F5AB2656561D005BEA3D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EFA3F5AB2656561D005BEA3D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		EFA3F5AD2656561F005BEA3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EFA3F5B02656561F005BEA3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EFA3F5B22656561F005BEA3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 				EFA3F5DA2656647D005BEA3D /* View */,
 				EFA3F5D726565946005BEA3D /* Model */,
 				EFA3F5A92656561D005BEA3D /* CAAppApp.swift */,
-				EFA3F5AB2656561D005BEA3D /* ContentView.swift */,
+				EFA3F5AB2656561D005BEA3D /* MainView.swift */,
 				EFA3F5AD2656561F005BEA3D /* Assets.xcassets */,
 				EFA3F5B22656561F005BEA3D /* Info.plist */,
 				EFA3F5AF2656561F005BEA3D /* Preview Content */,
@@ -302,7 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFC228CD2660EF9600D23AC3 /* Framework.swift in Sources */,
-				EFA3F5AC2656561D005BEA3D /* ContentView.swift in Sources */,
+				EFA3F5AC2656561D005BEA3D /* MainView.swift in Sources */,
 				EFA3F5DE265694AF005BEA3D /* FrameworkDetailView.swift in Sources */,
 				EFA3F5AA2656561D005BEA3D /* CAAppApp.swift in Sources */,
 				EFA3F5DC26566485005BEA3D /* FrameworkTitleView.swift in Sources */,

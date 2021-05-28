@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MainView.swift
 //  CAApp
 //
 //  Created by Jakub Gawecki on 20/05/2021.
@@ -9,18 +9,9 @@ import SwiftUI
 import ComposableArchitecture
 
 
-
-
-
-
-
-
-
 // MARK: - View
 
-
-
-struct ContentView: View {
+struct MainView: View {
    let store: Store<AppState, AppAction>
    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
    var body: some View {
@@ -30,8 +21,8 @@ struct ContentView: View {
                LazyVGrid(columns: columns, content: {
                   ForEachStore(
                      self.store.scope(
-                        state: \.frameworks,
-                        action: AppAction.framework(index:frameworkAction:)
+                        state:   \.frameworks,
+                        action:  AppAction.framework(index:frameworkAction:)
                      ),
                      content: SmallView.init(store:)
                   )
@@ -39,13 +30,13 @@ struct ContentView: View {
             }
             .sheet(
                item: viewStore.binding(
-                  get: \.selectedFramework,
-                  send: .dismissFrameworkDetailView
+                  get:  \.selectedFramework,
+                  send: .frameworkDetailView(.didCloseFramework)
                )) { _ in 
                IfLetStore(
                   self.store.scope(
-                     state: \.selectedFramework,
-                     action: AppAction.frameworkDetailView
+                     state:   \.selectedFramework,
+                     action:  AppAction.frameworkDetailView
                   ),
                   then: FrameworkDetailView.init(store:)
                )
@@ -56,14 +47,15 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-      ContentView(store: Store(
-                    initialState:   AppState(
-                     frameworks: MockData.frameworks,
-                     selectedFramework: nil),
-                    reducer:        appReducer,
-                    environment:    AppEnvironment()))
-    }
+   static var previews: some View {
+      MainView(store: Store(
+                initialState:   AppState(
+                  frameworks:          MockData.frameworks,
+                  selectedFramework:   nil
+                ),
+                reducer:        appReducer,
+                environment:    AppEnvironment(uuid: UUID.init)))
+   }
 }
 
 

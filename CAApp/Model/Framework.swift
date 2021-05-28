@@ -11,7 +11,7 @@ import ComposableArchitecture
 // MARK: - Framework Structure
 
 struct Framework: Identifiable, Equatable {
-   let id               = UUID()
+   let id:              UUID
    var isShowingSafari  = false
    let name:            String
    let imageName:       String
@@ -38,13 +38,8 @@ let frameworkReducer = Reducer<Framework, FrameworkAction, FrameworkEnvironment>
    case .didCloseFramework:
       return .none
    case .didGoSafari:
-      /// This action will never happen!!! Action will be passed to AppAction of FrameworkDetailView
-      framework.isShowingSafari.toggle()
-      print("didGoSafari")
       return .none
    case .didCloseSafari:
-      framework.isShowingSafari.toggle()
-      print("didCloseSafari")
       return .none
    }
 }
