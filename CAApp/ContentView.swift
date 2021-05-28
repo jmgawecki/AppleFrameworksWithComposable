@@ -18,6 +18,8 @@ struct AppState: Equatable {
 enum AppAction: Equatable {
    case framework(index: Int, frameworkAction: FrameworkAction)
    case selectedFramework(Framework?)
+   case dismissFrameworkDetailView
+   case frameworkDetailView(FrameworkAction)
 }
 
 struct AppEnvironment { }
@@ -29,6 +31,7 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
       action:           /AppAction.framework(index:frameworkAction:),
       environment:      { _ in FrameworkEnvironment() }
    ),
+   
    Reducer { state, action, environment in
       switch action {
       case .framework(index: let index, frameworkAction: FrameworkAction.didTapFramework):
@@ -41,10 +44,18 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
       case .selectedFramework(let framework):
          state.selectedFramework = framework
          return .none
+         
+      case .dismissFrameworkDetailView:
+         state.selectedFramework = nil
+         return .none
+         
+      case .frameworkDetailView:
+         return .none
       }
    }
 )
 .debug()
+
 
 
 
@@ -76,10 +87,8 @@ let frameworkReducer = Reducer<Framework, FrameworkAction, FrameworkEnvironment>
    case .didTapFramework:
       return .none
    case .didCloseFramework:
-      framework.isSelected.toggle()
       return .none
    case .didGoSafari:
-      print("didSafari")
       return .none
    }
 }
@@ -106,10 +115,19 @@ struct ContentView: View {
                   )
                })
             }
-            .sheet(item: viewStore.binding(
-               get: \.selectedFramework,
-               send: AppAction.selectedFramework(viewStore.selectedFramework)
-            ), content: { FrameworkDetailView(store: <#Store<Framework, FrameworkAction>#>, framework: $0) })
+            .sheet(
+               item: viewStore.binding(
+                  get: \.selectedFramework,
+                  send: .dismissFrameworkDetailView
+               )) { _ in 
+               IfLetStore(
+                  self.store.scope(
+                     state: \.selectedFramework,
+                     action: AppAction.frameworkDetailView
+                  ),
+                  then: FrameworkDetailView.init(store:)
+               )
+            }
          }
       }
    }

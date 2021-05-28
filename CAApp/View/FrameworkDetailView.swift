@@ -13,33 +13,34 @@ struct FrameworkDetailView: View {
 //    @State private var isShowingSafariView = false
    let store: Store<Framework, FrameworkAction>
     
-    var framework: Framework
     
-    var body: some View {
-        VStack {
+   var body: some View {
+      WithViewStore(self.store) { viewStore in
+         VStack {
             HStack {
-                Spacer()
-                CrossButton()
+               Spacer()
+               CrossButton()
             }
             .padding(.trailing)
             
             Spacer()
             
-            FrameworkTitleView(framework: framework)
+            FrameworkTitleView(framework: viewStore.state)
             
-            Description(framework: framework)
+            Description(framework: viewStore.state)
             
             Spacer()
             
-//            LearnMoreButtonView(isShowingSafariView: $isShowingSafariView)
-        }
-        .onDisappear(perform: {
-         //
-        })
-//        .fullScreenCover(isPresented: $isShowingSafariView, content: {
-//            SafariView(url: URL(string: framework.urlString) ?? URL(string: "www.apple.co.uk")!)
-//        })
-    }
+            //            LearnMoreButtonView(isShowingSafariView: $isShowingSafariView)
+         }
+         .onDisappear(perform: {
+            //
+         })
+         //        .fullScreenCover(isPresented: $isShowingSafariView, content: {
+         //            SafariView(url: URL(string: framework.urlString) ?? URL(string: "www.apple.co.uk")!)
+         //        })
+      }
+   }
 }
 //
 //struct FrameworkElementView_Previews: PreviewProvider {
