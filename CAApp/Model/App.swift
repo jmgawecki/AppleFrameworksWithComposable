@@ -49,6 +49,11 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
          state.selectedFramework = nil
          return .none
          
+      case .frameworkDetailView(.didGoSafari):
+         /// This action will happen instead of the FrameworkAction
+         state.selectedFramework?.isShowingSafari.toggle()
+         return .none
+         
       case .frameworkDetailView:
          return .none
       }

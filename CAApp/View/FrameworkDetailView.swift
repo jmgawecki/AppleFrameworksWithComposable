@@ -22,33 +22,42 @@ struct FrameworkDetailView: View {
                CrossButton()
             }
             .padding(.trailing)
-            
             Spacer()
-            
             FrameworkTitleView(framework: viewStore.state)
-            
             Description(framework: viewStore.state)
-            
             Spacer()
             
-            //            LearnMoreButtonView(isShowingSafariView: $isShowingSafariView)
+            LearnMoreButtonView(store: store)
+//            LearnMoreButtonView(
+//               isShowingSafariView: viewStore.binding(
+//                  get: \.isShowingSafari,
+//                  send: FrameworkAction.didGoSafari)
+//            )
          }
-         .onDisappear(perform: {
-            //
-         })
-         //        .fullScreenCover(isPresented: $isShowingSafariView, content: {
-         //            SafariView(url: URL(string: framework.urlString) ?? URL(string: "www.apple.co.uk")!)
-         //        })
+         .fullScreenCover(isPresented: viewStore.binding(
+            get: \.isShowingSafari,
+            send: FrameworkAction.didCloseSafari)
+         ) {
+            SafariView(url: URL(string: viewStore.urlString) ?? URL(string: "www.apple.co.uk")!)
+         }
+//                 .fullScreenCover(isPresented: view, content: {
+//                     SafariView(url: URL(string: viewStore.urlString) ?? URL(string: "www.apple.co.uk")!)
+//                 })
       }
    }
 }
-//
-//struct FrameworkElementView_Previews: PreviewProvider {
-//    static var previews: some View {
-//      FrameworkDetailView(store: <#Store<Framework, FrameworkAction>#>, framework: MockData.sampleFramework)
-//            .preferredColorScheme(.dark)
-//    }
-//}
+
+struct FrameworkElementView_Previews: PreviewProvider {
+   static var previews: some View {
+      FrameworkDetailView(
+         store: Store<Framework, FrameworkAction>(
+            initialState: MockData.sampleFramework,
+            reducer: frameworkReducer,
+            environment: FrameworkEnvironment()
+         ))
+         .preferredColorScheme(.dark)
+   }
+}
 
 //MARK:- Views
 
@@ -77,20 +86,23 @@ struct Description: View {
 }
 
 struct LearnMoreButtonView: View {
-    @Binding var isShowingSafariView: Bool
+   let store: Store<Framework, FrameworkAction>
+   
     var body: some View {
-        Button {
-            isShowingSafariView = true
-        } label: {
-            Text("Learn More")
-                .font           (.title2)
-                .fontWeight     (.semibold)
-                .frame          (width: 280, height: 50, alignment: .center)
-                .background     (Color.red)
-                .foregroundColor(.white)
-                .cornerRadius   (10)
-                
+      WithViewStore(self.store) { viewStore in
+         Button {
+            viewStore.send(.didGoSafari)
+           } label: {
+               Text("Learn More")
+                   .font           (.title2)
+                   .fontWeight     (.semibold)
+                   .frame          (width: 280, height: 50, alignment: .center)
+                   .background     (Color.red)
+                   .foregroundColor(.white)
+                   .cornerRadius   (10)
+                   
         }
+      }
     }
 }
 
