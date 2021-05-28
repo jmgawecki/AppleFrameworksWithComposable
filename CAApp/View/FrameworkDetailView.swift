@@ -19,7 +19,7 @@ struct FrameworkDetailView: View {
          VStack {
             HStack {
                Spacer()
-               CrossButton()
+               CrossButton(store: self.store)
             }
             .padding(.trailing)
             Spacer()
@@ -28,11 +28,6 @@ struct FrameworkDetailView: View {
             Spacer()
             
             LearnMoreButtonView(store: store)
-//            LearnMoreButtonView(
-//               isShowingSafariView: viewStore.binding(
-//                  get: \.isShowingSafari,
-//                  send: FrameworkAction.didGoSafari)
-//            )
          }
          .fullScreenCover(isPresented: viewStore.binding(
             get: \.isShowingSafari,
@@ -40,9 +35,6 @@ struct FrameworkDetailView: View {
          ) {
             SafariView(url: URL(string: viewStore.urlString) ?? URL(string: "www.apple.co.uk")!)
          }
-//                 .fullScreenCover(isPresented: view, content: {
-//                     SafariView(url: URL(string: viewStore.urlString) ?? URL(string: "www.apple.co.uk")!)
-//                 })
       }
    }
 }
@@ -62,16 +54,19 @@ struct FrameworkElementView_Previews: PreviewProvider {
 //MARK:- Views
 
 struct CrossButton: View {
-//    @Binding var isShowingDetailView: Bool
+   let store: Store<Framework, FrameworkAction>
+   
     var body: some View {
-        Button {
-//            isShowingDetailView = false
-        } label: {
-            Image(systemName: "xmark")
-                .foregroundColor(Color(.label))
-                .imageScale(.large)
-                .frame(width: 44, height: 44, alignment: .center)
+      WithViewStore(self.store) { viewStore in
+         Button {
+            viewStore.send(.didCloseFramework)
+           } label: {
+               Image(systemName: "xmark")
+                   .foregroundColor(Color(.label))
+                   .imageScale(.large)
+                   .frame(width: 44, height: 44, alignment: .center)
         }
+      }
     }
 }
 
