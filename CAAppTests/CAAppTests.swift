@@ -43,7 +43,7 @@ class CAAppTests: XCTestCase {
    }
    
    
-   func testDeselectingFramework() {
+   func testDidCloseFrameworkWithCrossButton() {
       // Arrange
       let store = TestStore(
          initialState: AppState(
@@ -70,7 +70,43 @@ class CAAppTests: XCTestCase {
       
       // Act and Assert
       store.assert(
-         .send(.framework(index: 0, frameworkAction: .didCloseFramework)) {
+         .send(.frameworkDetailView(.didCloseFramework)),
+         .receive(.frameworkSheetWentDown) {
+            $0.selectedFramework = nil
+         }
+         
+      )
+   }
+   
+   
+   func testDidCloseFrameworkBySlidingDown() {
+      // Arrange
+      let store = TestStore(
+         initialState: AppState(
+            frameworks: [
+               Framework(
+                  id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+                  isShowingSafari: false,
+                  name: "test",
+                  imageName: "test",
+                  urlString: "test",
+                  description: "test")
+            ],
+            selectedFramework:
+               Framework(
+                  id: UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")!,
+                  isShowingSafari: false,
+                  name: "test",
+                  imageName: "test",
+                  urlString: "test",
+                  description: "test")
+         ),
+         reducer: appReducer,
+         environment: AppEnvironment(uuid: { UUID(uuidString: "DEADBEEF-DEAD-BEEF-DEAD-BEEFDEADBEEF")! }))
+      
+      // Act and Assert
+      store.assert(
+         .send(.frameworkSheetWentDown) {
             $0.selectedFramework = nil
          }
       )

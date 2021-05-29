@@ -31,7 +31,7 @@ struct MainView: View {
             .sheet(
                item: viewStore.binding(
                   get:  \.selectedFramework,
-                  send: .frameworkDetailView(.didCloseFramework)
+                  send: .frameworkSheetWentDown
                )) { _ in 
                IfLetStore(
                   self.store.scope(

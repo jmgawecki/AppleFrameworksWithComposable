@@ -18,6 +18,7 @@ struct AppState: Equatable {
 enum AppAction: Equatable {
    case framework(index: Int, frameworkAction: FrameworkAction)
    case frameworkDetailView(FrameworkAction)
+   case frameworkSheetWentDown
 }
 
 struct AppEnvironment {
@@ -54,10 +55,14 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
          return .none
          
       case .frameworkDetailView(.didCloseFramework):
-         state.selectedFramework = nil
-         return .none
+//         state.selectedFramework = nil
+         return Effect(value: .frameworkSheetWentDown)
          
       case .frameworkDetailView:
+         return .none
+         
+      case .frameworkSheetWentDown:
+         state.selectedFramework = nil
          return .none
       }
    }
