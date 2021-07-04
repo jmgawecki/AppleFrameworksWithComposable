@@ -55,7 +55,6 @@ let appReducer = Reducer<AppState, AppAction, AppEnvironment>.combine(
          return .none
          
       case .frameworkDetailView(.didCloseFramework):
-//         state.selectedFramework = nil
          return Effect(value: .frameworkSheetWentDown)
          
       case .frameworkDetailView:
